@@ -6,10 +6,11 @@
 .wrap {
     height: 100%;
     width: 100%;
-    background-image: url(img/background.jpg);
     background-position: center;
     background-size: cover;
     position: absolute;
+    /* background-color: #ff105f; */
+    background-image: url(img/background.jpg);
 }
 .form-wrap {
     width: 380px;

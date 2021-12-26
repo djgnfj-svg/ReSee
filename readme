@@ -5,3 +5,8 @@ TODO_LIST
 1. rememberme 만들기
 2. 회원가입 input 설정, html만들기
 3. 
+
+
+login static css link문제
+아니 미친 어떡해하면 style이라는 css파일의 이름을 바꾸면 백그라운드만 이미지가 안나옴?
+이거맞아?
