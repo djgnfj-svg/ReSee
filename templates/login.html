@@ -17,7 +17,11 @@
                     <img src="{% static 'img/tw.png' %}" alt="twitter">
                     <img src="{% static 'img/gl.png' %}" alt="google">
                 </div>
-                <form id="login" action="" class="input-group">
+                <form id="login" action="" class="input-group" method="post">
+                    {% if msg %}
+                    <p class="text-center text-sm text-danger">{{ msg }}</p>
+                    {% endif %}
+                    {% csrf_token %}
                     {{ form.email }}
                     {{ form.password }}
                     <input type="checkbox" class="checkbox"><span>Remember Password</span>
