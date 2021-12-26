@@ -23,10 +23,13 @@ class Organization(TimeStampedModel):
     pay_plan = models.ForeignKey(PayPlan, on_delete=models.DO_NOTHING, null=True)
 
 class Users(models.Model):
-    user = models.OneToOneField(U, on_delete=models.CASCADE)
+    username = models.OneToOneField(U, on_delete=models.CASCADE)
     full_name = models.CharField(max_length=100, null=True)
-    email = models.EmailField(max_length=100, null=True)
+    useremail = models.EmailField(max_length=100, null=True, unique=True)
     organization = models.ForeignKey(Organization, on_delete=models.DO_NOTHING, null=True)
+    
+    USERNAME_FIELD = 'useremail'
+    REQUIRED_FIELDS = []
 
 class Categories(TimeStampedModel):
     name = models.CharField(max_length=100)

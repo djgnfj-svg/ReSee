@@ -1,18 +1,19 @@
 from django.contrib.auth import authenticate, login, logout
+from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import redirect, render
+
 from Reviewer.form import LoginForm, RegisterForm
 from Reviewer.models import Users
-from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 
 @csrf_exempt
 def login_view(request):
+    form_register = RegisterForm()
     if request.method == "POST":
-        form = LoginForm(request.POST)
-        form_register = RegisterForm(request.POST)
-        if form.is_valid():
-            email = form.cleaned_data.get("email")
-            raw_password = form.cleaned_data.get("password")
+        form_login = LoginForm(request.POST)
+        if form_login.is_valid():
+            email = form_login.cleaned_data.get("email")
+            raw_password = form_login.cleaned_data.get("password")
             msg = "가입되있지 않거나 키보드를 사야할지도 모릅니다."
         try :
             user = Users.objects.get(email=email)	
@@ -24,25 +25,24 @@ def login_view(request):
                 login(request, user)
     else:
         msg = None
-        form = LoginForm()
-    print(request.id)
-    return render(request, "login.html", {"form" : form, "msg" : msg})
+        form_login = LoginForm()
+    
+    return render(request, "login.html", {"form_login" : form_login, "msg" : msg, "form_register" : form_register})
 
-def register(request):
+def register_view(request):
     if request.method == "POST":
-        form = RegisterForm(request.POST)
+        form_register = RegisterForm(request.POST)
         msg = "잘쳐라 씹라야"
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get("username")
-            raw_password = form.cleaned_data.get("password1")
-            user = authenticate(username=username, password=raw_password)
+        if form_register.is_valid():
+            form_register.save()
+            username = form_register.cleaned_data.get("username")
+            raw_password = form_register.cleaned_data.get("password1")
+            useremail = form_register.cleaned_data.get("useremail")
+            user = authenticate(username=username, password=raw_password, useremail=useremail)
             login(request, user)
             msg = "가입완료"
-        return render(request, "login.html", {"form_register": form, "msg": msg})
-    else:
-        form = RegisterForm()
-    return render(request, "login.html", {"form_register": form})
+        return render(request, "login.html", {"form_register": form_register, "msg": msg})
+    return redirect("login")
 
 def logout_view(request):
     logout(request)
