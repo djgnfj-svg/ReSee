@@ -27,10 +27,10 @@
                     <input type="checkbox" class="checkbox"><span>Remember Password</span>
                     <button class="submit">Login</button>
                 </form>
-                <form id="register" action="" class="input-group">
-                    <input type="text" class="input-field" placeholder="User name or Email" required>
-                    <input type="email" class="input-field" placeholder="Your Email" required>
-                    <input type="password" class="input-field" placeholder="Enter Password" required>
+                <form id="register" action="" class="input-group" method="post">
+                    {{ form_register.username }}
+                    {{ form_register.email }}
+                    {{ form_register.password }}
                     <input type="checkbox" class="checkbox"><span>Terms and conditions</span>
                     <button class="submit">REGISTER</button>
                 </form>
