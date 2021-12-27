@@ -15,9 +15,9 @@
                     <button type="button" class="togglebtn" onclick="register()">REGISTER</button>
                 </div>
                 <div class="social-icons">
-                    <img src="{% static 'img/fb.png' %}" alt="facebook">
-                    <img src="{% static 'img/tw.png' %}" alt="twitter">
-                    <img src="{% static 'img/gl.png' %}" alt="google">
+                    <img src="{% static 'css/img/fb.png' %}" alt="facebook">
+                    <img src="{% static 'css/img/tw.png' %}" alt="twitter">
+                    <img src="{% static 'css/img/gl.png' %}" alt="google">
                 </div>
                 <form id="login" action="" class="input-group" method="post">
                     {% if msg %}
@@ -27,14 +27,15 @@
                     {{ form_login.email }}
                     {{ form_login.password }}
                     <input type="checkbox" class="checkbox"><span>Remember Password</span>
-                    <button class="submit">Login</button>
+                    <button class="submit" name="login">Login</button>
                 </form>
                 <form id="register" action="" class="input-group" method="post">
                     {{ form_register.username }}
+                    {{ form_register.password1 }}
+                    {{ form_register.password2 }}
                     {{ form_register.email }}
-                    {{ form_register.password }}
                     <input type="checkbox" class="checkbox"><span>Terms and conditions</span>
-                    <button class="submit" onclick="location.href='/register/'">REGISTER</button>
+                    <button class="submit" name="register">REGISTER</button>
                 </form>
             </div>
         </div>

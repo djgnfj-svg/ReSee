@@ -2,7 +2,7 @@ import string
 import random
 
 from django.db import models
-from django.contrib.auth.models import User as U
+from django.contrib.auth.models import AbstractUser
 # Create your models here.
 
 class TimeStampedModel(models.Model):
@@ -22,14 +22,14 @@ class Organization(TimeStampedModel):
     name = models.CharField(max_length=50)
     pay_plan = models.ForeignKey(PayPlan, on_delete=models.DO_NOTHING, null=True)
 
-class Users(models.Model):
-    username = models.OneToOneField(U, on_delete=models.CASCADE)
+class Users(AbstractUser):
     full_name = models.CharField(max_length=100, null=True)
     useremail = models.EmailField(max_length=100, null=True, unique=True)
     organization = models.ForeignKey(Organization, on_delete=models.DO_NOTHING, null=True)
     
     USERNAME_FIELD = 'useremail'
     REQUIRED_FIELDS = []
+
 
 class Categories(TimeStampedModel):
     name = models.CharField(max_length=100)

@@ -6,7 +6,7 @@ from Reviewer.models import Users
 
 class LoginForm(forms.Form):
     email = forms.EmailField(
-        max_length=100, required=True, widget=forms.TextInput(attrs={"class" : "input-field", "placeholder": "이메일"})
+        max_length=100, required=True, widget=forms.EmailInput(attrs={"class" : "input-field", "placeholder": "이메일"})
     )
     password = forms.CharField(
         max_length=30, required=True, 
@@ -15,28 +15,32 @@ class LoginForm(forms.Form):
 
 
 class RegisterForm(UserCreationForm):
-
     class Meta:
         model = Users
         fields=(
         "username",
-        "email",
         "password1",
+        "password2",
+        "email",
         )
         
     username = forms.CharField(
         max_length=30, required=True, widget=forms.TextInput(attrs={"class" : "input-field", "placeholder": "유저이름"})
         )
-    password = forms.CharField(
+    password1 = forms.CharField(
         max_length=30, required=True, 
         widget=forms.PasswordInput(attrs={"class" : "input-field", "placeholder": "패스워드"})
     )
-    email = forms.EmailField(
-        max_length=30, required=True, widget=forms.TextInput(attrs={"class" : "input-field", "placeholder": "이메일"})
+    password2 = forms.CharField(
+        max_length=30, required=True, 
+        widget=forms.PasswordInput(attrs={"class" : "input-field", "placeholder": "패스워드 확인"})
     )
-    def save(self, commit=True):  # save메소드 오버라이
-        user = super(RegisterForm, self).save(commit=False) # 기존의 id와 pw를 저장. commit이 Flase인 이유는 2번 저장하는것 방지.
-        user.email = self.cleaned_data["email"]               # user 객체에 email 값 추가.
+    email = forms.EmailField(
+        max_length=30, required=True, widget=forms.EmailInput(attrs={"class" : "input-field", "placeholder": "이메일"})
+    )
+    def save(self, commit=True): # 저장하는 부분 오버라이딩
+        user = super(RegisterForm, self).save(commit=False) # 본인의 부모를 호출해서 저장하겠다.
+        user.email = self.cleaned_data["email"]
         if commit:
-            user.save()              # 객체에 대한 모든 정보를 DB에 저장.
+            user.save()
         return user
