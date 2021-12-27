@@ -27,14 +27,15 @@
                     {{ form_login.email }}
                     {{ form_login.password }}
                     <input type="checkbox" class="checkbox"><span>Remember Password</span>
-                    <button class="submit">Login</button>
+                    <button class="submit" name="login">Login</button>
                 </form>
                 <form id="register" action="" class="input-group" method="post">
                     {{ form_register.username }}
+                    {{ form_register.password1 }}
+                    {{ form_register.password2 }}
                     {{ form_register.email }}
-                    {{ form_register.password }}
                     <input type="checkbox" class="checkbox"><span>Terms and conditions</span>
-                    <button class="submit" onclick="location.href='/register/'">REGISTER</button>
+                    <button class="submit" name="register">REGISTER</button>
                 </form>
             </div>
         </div>
