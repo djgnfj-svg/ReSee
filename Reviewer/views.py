@@ -41,11 +41,11 @@ def login_view(request):
             if user.check_password(raw_password):
                 print("test5")
                 msg = "성공"
-                login(request, user)
+                login(request,user)
     else:
         msg = None
         form_login = LoginForm()
-    
+
     return render(request, "login.html", {"form_login" : form_login, "msg" : msg, "form_register" : form_register})
 
 @csrf_exempt
@@ -69,7 +69,7 @@ def register_view(request):
 
 def logout_view(request):
     logout(request)
-    return redirect("")
+    return redirect("home")
 
 def home_view(request):
     return render(request, "home.html")
