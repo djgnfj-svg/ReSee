@@ -16,7 +16,8 @@ def login_view(request):
             raw_password = form_login.cleaned_data.get("password")
             msg = "가입되있지 않거나 키보드를 사야할지도 모릅니다."
         try :
-            user = Users.objects.get(email=email)	
+            user = Users.objects.get(useremail=email)	
+            print("test1")
         except Users.DoesNotExist:
             pass
         else :
@@ -42,7 +43,9 @@ def register_view(request):
             login(request, user)
             msg = "가입완료"
         return render(request, "login.html", {"form_register": form_register, "msg": msg})
-    return redirect("login")
+    else:
+        form_register = RegisterForm()
+        return render(request, "login.html", {"form_register": form_register})
 
 def logout_view(request):
     logout(request)

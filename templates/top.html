@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        function home(){
+            location.href="home"
+        }
+    </script>
+    <style>
+    div#a{
+        position: relative;
+        left:150px;
+    }
+    
+    div ul li#login{
+        position: relative;
+        left: 600px
+    }
+
+    
+    
+    </style>
+</head>
+<body>
+    <!-- Navigation-->
+    <!-- <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
+        <div class="container" id="page-top">
+            <a class="navbar-brand" onclick="home()">Start Bootstrap</a>
+            <button class="navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                Menu   
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ">
+                    <li>Portfolio</li>
+                    <li>About</li>
+                    <li>Contact</li>
+                </ul>
+            </div>
+        </div>
+    </nav> -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container" id="a">
+          <a class="navbar-brand" href="#">Navbar</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="#">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Dropdown
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+              </li>
+
+              {% if user_is_active %}
+              <li class="nav-item" id="login">
+                  <a class="nav-link" href="{% url 'login' %}"></a>
+                </li>
+                <li class="nav-item" id="login">
+                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                  </li>
+                  <li class="nav-item" id="login">
+                    <a class="nav-link" href="#">My Page</a>
+                   </li>
+                  {% else %}
+
+                  <li class="nav-item" id="login">
+                    <a class="nav-link" href="{% url 'login'  %}">Login</a>
+                  </li>
+                  <li class="nav-item" id="login">
+                      <a class="nav-link" href="{% url 'admin:index' %}">Admin</a>
+                    </li>
+                    <li class="nav-item" id="login">
+                        <a class="nav-link" href="#">My Page</a>
+                    </li>
+                  {% endif %}
+                    <!-- 로그인시 개인페이지이동 / 비로그인시 Login-->
+                    
+              
+
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+  </body>
+</html>
