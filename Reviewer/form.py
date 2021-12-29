@@ -21,7 +21,22 @@ class MemberModifiForm(forms.Form):
             "useremail"
         )
     useremail = forms.EmailField(
-        max_length=30, required=True, widget=forms.EmailInput(attrs={"class" : "input-field", "placeholder": "이메일"})
+        max_length=30, required=True, widget=forms.EmailInput(attrs={"class" : "input-field", "placeholder": "이메일수정"})
+    )
+
+class MemberModifiForm(forms.Form):
+    class Meta:
+        model = Users
+        fields = (
+            "useremail",
+            "password",
+        )
+    useremail = forms.EmailField(
+        max_length=30, required=True, widget=forms.EmailInput(attrs={"class" : "input-field", "placeholder": "이메일수정"})
+    )
+    password1 = forms.CharField(
+        max_length=30, required=True, 
+        widget=forms.PasswordInput(attrs={"class" : "input-field", "placeholder": "패스워드"})
     )
 
 class RegisterForm(UserCreationForm):

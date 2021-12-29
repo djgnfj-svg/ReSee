@@ -62,18 +62,36 @@ def logout_view(request):
     logout(request)
     return redirect("home")
 
+@csrf_exempt
 @login_required
-def member_modifi_view(request):
-    form_modifi = MemberModifiForm()
+def member_modify_view(request):
+    form_modify = MemberModifiForm()
     if request.method == "POST":
-        form_login = MemberModifiForm(request.POST)
-        if form_login.is_valid():
+        form_modify = MemberModifiForm(request.POST)
+        if form_modify.is_valid():
             user = request.user
-            user.email = request.POST["email"]
+            user.email = request.POST["useremail"]
             user.save()
     else:
         msg = None
-    return render(request, "member_modifi.html", {"form_modify" : form_modifi})
+    return render(request, "member_modify.html", {"form_modify" : form_modify})
+    
+
+@csrf_exempt
+@login_required
+def member_del_view(request):
+    form_del = MemberModifiForm()
+    if request.method == "POST":
+        form_del = MemberModifiForm(request.POST)
+        print(form_del.errors.as_json())
+        if form_del.is_valid():
+            user = request.user
+            email = request.POST["useremail"]
+            raw_password = request.POST["password1"]
+            if user.check_password(raw_password):
+                user.delete()
+                return redirect("home")
+    return render(request, "member_del.html", {"form_del" : form_del})
     
 
 def home_view(request):
