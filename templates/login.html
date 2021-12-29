@@ -20,13 +20,13 @@
                 </div>
                 <form id="login" action="" class="input-group" method="post">
                     {% if msg %}
-                    <p class="text-center text-sm text-danger">{{ msg }}</p>
+                    <p class="text-center text-sm text-danger">{{ msg }} {{ request.session.id}}</p>
                     {% endif %}
                     {% csrf_token %}
                     {{ form_login.email }}
                     {{ form_login.password }}
                     <input type="checkbox" class="checkbox"><span>Remember Password</span>
-                    <button class="submit" name="login">Login</button>
+                    <button class="submit" name="login" action="home">Login</button>
                 </form>
                 <form id="register" action="" class="input-group" method="post">
                     {{ form_register.username }}
@@ -55,6 +55,7 @@
                 y.style.left = "50px";
                 z.style.left = "110px";
             }
+            
         </script>
     </body>
 </html>

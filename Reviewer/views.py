@@ -1,4 +1,6 @@
-from django.contrib.auth import login, logout
+from collections import UserList
+from django.contrib.auth import SESSION_KEY, login, logout
+from django.http import response
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import redirect, render
 from Reviewer.form import LoginForm, MemberModifiForm, RegisterForm
@@ -38,10 +40,10 @@ def login_view(request):
             if user.check_password(raw_password):
                 msg = "성공"
                 login(request, user)
+                return render(request,"home.html")
     else:
         msg = None
         form_login = LoginForm()
-    
     return render(request, "login.html", {"form_login" : form_login, "msg" : msg, "form_register" : form_register})
 
 
@@ -96,3 +98,6 @@ def member_del_view(request):
 
 def home_view(request):
     return render(request, "home.html")
+
+def board_view(request):
+    return render(request, "board.html")
