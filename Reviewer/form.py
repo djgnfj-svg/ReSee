@@ -14,6 +14,16 @@ class LoginForm(forms.Form):
     )
 
 
+class MemberModifiForm(forms.Form):
+    class Meta:
+        model = Users
+        fields = (
+            "useremail"
+        )
+    useremail = forms.EmailField(
+        max_length=30, required=True, widget=forms.EmailInput(attrs={"class" : "input-field", "placeholder": "이메일"})
+    )
+
 class RegisterForm(UserCreationForm):
     class Meta:
         model = Users

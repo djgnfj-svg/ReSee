@@ -1,9 +1,10 @@
 from django.contrib.auth import login, logout
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import redirect, render
-from Reviewer.form import LoginForm, RegisterForm
+from Reviewer.form import LoginForm, MemberModifiForm, RegisterForm
 from Reviewer.models import Users
 
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 @csrf_exempt
@@ -60,6 +61,20 @@ def register_view(request):
 def logout_view(request):
     logout(request)
     return redirect("home")
+
+@login_required
+def member_modifi_view(request):
+    form_modifi = MemberModifiForm()
+    if request.method == "POST":
+        form_login = MemberModifiForm(request.POST)
+        if form_login.is_valid():
+            user = request.user
+            user.email = request.POST["email"]
+            user.save()
+    else:
+        msg = None
+    return render(request, "member_modifi.html", {"form_modify" : form_modifi})
+    
 
 def home_view(request):
     return render(request, "home.html")
