@@ -21,12 +21,12 @@ class RegisterForm(UserCreationForm):
         "username",
         "password1",
         "password2",
-        "email",
+        "useremail",
         )
         
     username = forms.CharField(
         max_length=30, required=True, widget=forms.TextInput(attrs={"class" : "input-field", "placeholder": "유저이름"})
-        )
+    )
     password1 = forms.CharField(
         max_length=30, required=True, 
         widget=forms.PasswordInput(attrs={"class" : "input-field", "placeholder": "패스워드"})
@@ -35,12 +35,12 @@ class RegisterForm(UserCreationForm):
         max_length=30, required=True, 
         widget=forms.PasswordInput(attrs={"class" : "input-field", "placeholder": "패스워드 확인"})
     )
-    email = forms.EmailField(
+    useremail = forms.EmailField(
         max_length=30, required=True, widget=forms.EmailInput(attrs={"class" : "input-field", "placeholder": "이메일"})
     )
     def save(self, commit=True): # 저장하는 부분 오버라이딩
         user = super(RegisterForm, self).save(commit=False) # 본인의 부모를 호출해서 저장하겠다.
-        user.email = self.cleaned_data["email"]
+        user.email = self.cleaned_data["useremail"]
         if commit:
             user.save()
         return user

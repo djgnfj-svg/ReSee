@@ -1,10 +1,9 @@
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
-from django.contrib import auth
+from django.contrib.auth import login, logout
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import redirect, render
 from Reviewer.form import LoginForm, RegisterForm
 from Reviewer.models import Users
+
 # Create your views here.
 
 @csrf_exempt
@@ -12,6 +11,7 @@ def login_register_control_view(request):
     msg = None
     form_login = LoginForm()
     form_register = RegisterForm()
+    # form_register = None
     if request.method == "POST":
         if "register" in request.POST:
             return register_view(request)
@@ -29,26 +29,21 @@ def login_view(request):
             email = form_login.cleaned_data.get("email")
             raw_password = form_login.cleaned_data.get("password")
             msg = "가입되있지 않거나 키보드를 사야할지도 모릅니다."
-            print("test1")
         try :
             user = Users.objects.get(email=email)
-            print("test2")
         except Users.DoesNotExist:
-            print("test3")
             pass
         else :
-            print("test4")
             if user.check_password(raw_password):
-                print("test5")
                 msg = "성공"
-                login(request,user)
+                login(request, user)
     else:
         msg = None
         form_login = LoginForm()
-
+    
     return render(request, "login.html", {"form_login" : form_login, "msg" : msg, "form_register" : form_register})
 
-@csrf_exempt
+
 def register_view(request):
     form_login = LoginForm()
     form_register = RegisterForm()
@@ -58,11 +53,6 @@ def register_view(request):
         print(form_register.errors.as_json())
         if form_register.is_valid():
             form_register.save()
-            username = form_register.cleaned_data.get("username")
-            raw_password = form_register.cleaned_data.get("password1")
-            email = form_register.cleaned_data.get("email")
-            user = authenticate(username=username, password=raw_password, useremail = email)
-            # login(request, user)
             msg = "가입완료"
         return render(request, "login.html", {"form_login" : form_login, "msg" : msg, "form_register" : form_register})
     return render(request, "login.html", {"form_login" : form_login, "msg" : msg, "form_register" : form_register})
