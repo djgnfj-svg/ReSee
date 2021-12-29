@@ -3,7 +3,7 @@ from django.contrib.auth import SESSION_KEY, login, logout
 from django.http import response
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import redirect, render
-from Reviewer.form import LoginForm, MemberModifiForm, RegisterForm
+from Reviewer.form import LoginForm, MemberDelForm, MemberModifiForm, RegisterForm
 from Reviewer.models import Users
 
 from django.contrib.auth.decorators import login_required
@@ -53,7 +53,6 @@ def register_view(request):
     msg = None
     if request.method == "POST":
         form_register = RegisterForm(request.POST)
-        print(form_register.errors.as_json())
         if form_register.is_valid():
             form_register.save()
             msg = "가입완료"
@@ -82,9 +81,9 @@ def member_modify_view(request):
 @csrf_exempt
 @login_required
 def member_del_view(request):
-    form_del = MemberModifiForm()
+    form_del = MemberDelForm()
     if request.method == "POST":
-        form_del = MemberModifiForm(request.POST)
+        form_del = MemberDelForm(request.POST)
         print(form_del.errors.as_json())
         if form_del.is_valid():
             user = request.user

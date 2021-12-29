@@ -24,7 +24,7 @@ class MemberModifiForm(forms.Form):
         max_length=30, required=True, widget=forms.EmailInput(attrs={"class" : "input-field", "placeholder": "이메일수정"})
     )
 
-class MemberModifiForm(forms.Form):
+class MemberDelForm(forms.Form):
     class Meta:
         model = Users
         fields = (
