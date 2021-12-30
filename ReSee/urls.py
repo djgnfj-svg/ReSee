@@ -20,9 +20,9 @@ from Reviewer.views import board_view, home_view, login_register_control_view, l
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", login_register_control_view, name="login"),
+    path("login", login_register_control_view, name="login"),
     path('register/', register_view, name="register"),
-    path("home", home_view, name="home"),
+    path("", home_view, name="home"),
     path('logout/', logout_view, name="logout"),
     path('member_modify/', member_modify_view, name="member_modify"),
     path('member_del/', member_del_view, name="member_del"),
