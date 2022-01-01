@@ -42,7 +42,7 @@ class StudyList(TimeStampedModel):
         return random.choice(str_pool).lower()
 
     nick_name = models.CharField(max_length=100)
-    category_id = models.ForeignKey(Categories, on_delete=models.DO_NOTHING, null=True)
+    category_id = models.ForeignKey(Categories, on_delete=models.CASCADE, null=True)
     created_by = models.ForeignKey(Users, on_delete=models.CASCADE)    
     study_topic = models.CharField(max_length=30)
     study_contect = models.TextField()
