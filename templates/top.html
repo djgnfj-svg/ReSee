@@ -7,13 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script>
         function home(){
-            location.href="home"
+            location.href="/"
         }
     </script>
     <style>
     div#a{
         position: relative;
-        left:150px;
+        left:350px;
+        margin: 10px 10px;
+
     }
     
     div ul li#login_temp{
@@ -29,7 +31,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container" id="a">
-          <a class="navbar-brand" href="#">ReSee</a>
+          <a class="navbar-brand" href="/">ReSee</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -63,7 +65,7 @@
                         {{ request.user.username }}
                       </button>
                       <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="#">My Page</a></li>
+                        <li><a class="dropdown-item" href="board">My Page</a></li>
                         <li><a class="dropdown-item" href="#">Setting</a></li>
                         <li>
                           <a class="dropdown-item" href="{% url 'logout' %}">Sign Out</a>
@@ -85,5 +87,4 @@
         </div>
       </nav>
   </body>
-  
-</html>
+   </html>
