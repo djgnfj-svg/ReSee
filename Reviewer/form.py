@@ -123,4 +123,5 @@ class StudyCreateForm(forms.ModelForm):
         instance.nick_name = instance.nick_name.strip()
         instance.study_topic = instance.study_topic.strip()
         instance.study_contect = instance.study_contect.strip()
-        StudyList.objects.filter(pk=list_id, created_by_id=request.user.id).update(category_name=instance.category_name)
+        StudyList.objects.filter(pk=list_id, created_by_id=request.user.id).update(
+            study_topic=instance.study_topic, study_contect=instance.study_contect)

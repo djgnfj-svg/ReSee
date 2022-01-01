@@ -28,12 +28,8 @@
               <th scope="row">{{ l.study_topic }}</th>
               <td>{{ l.created_at }}</td>
               <td>
-                <form action="/category_list/delete/{{ l.id }}" method="POST">
                 {% csrf_token %}
-                <!-- <a href="/category_list/study_list/{{ l.id }}" class="btn btn-sm btn-primary">
-                  내용 보기
-                </a> -->
-                <a href="/category_list/update/{{ l.id }}" class="btn btn-sm btn-primary">
+                <a href="{% url 'study_change' category_id=category_id action='update' study_id=l.id %}" class="btn btn-sm btn-primary">
                     내용 수정
                   </a>
                   <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('정말 삭제 하시겠습니까?');">
