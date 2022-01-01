@@ -3,12 +3,13 @@
 
 /* VARIABLES CSS */
 :root {
-    --nav--width: 90px;
+    --nav--width: 92px;
 
     /* Colores */
-    --first-color: #0c5df4;
-    --sub-color: #b6cefc;
-    --white-color: #fff;
+    --first-color: #295ab6;
+    --bg-color: #4d4949;
+    --sub-color: #d42710;
+    --white-color: rgb(233, 230, 230);
 
     /* Fuente y tipografia */
     --body-font: 'Poppins', sans-serif;
@@ -27,6 +28,7 @@
 body {
     position: relative;
     margin: 0;
+    padding: 0 0 0 5.75rem;
     font-family: var(--body-font);
     font-size: var(--normal-font-size);
     transition: .5s;
@@ -48,11 +50,12 @@ a {
 
 /* l NAV */
 .l-navbar {
-    position: relative;
+    position: fixed;
     top: 0;
     left: 0;
     width: var(--nav--width);
     height: 100vh;
+    background-color: var(--bg-color);
     color: var(--white-color);
     padding: 1.5rem 1.5rem 2rem;
     transition: .5s;
@@ -73,22 +76,18 @@ a {
     grid-template-columns: max-content max-content;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: -2;
-    margin-top : -2;
-    
+    margin-bottom: 2rem;
 }
 
 .nav__toggle {
-    font-size: 2rem;
-    padding: 1rem;
+    font-size: 1.25rem;
+    padding: .75rem;
     cursor: pointer;
-    color : white;
 }
 
 .nav__logo {
     color: var(--white-color);
     font-weight: 600;
-    color : white;
 }
 
 .nav__link {
@@ -110,12 +109,10 @@ a {
 
 .nav__icon {
     font-size: 1.25rem;
-    color : black;
 }
 
 .nav_name {
     font-size: var(--small-font-size);
-    color : black
 }
 
 /* Expander menu */
@@ -125,7 +122,7 @@ a {
 
 /* Add padding body*/
 .body-pd {
-    padding: 20 0 10 0rem;
+    padding: 0 0 0 15rem;
 }
 
 /* Active links menu */
