@@ -28,6 +28,7 @@
               <th scope="row">{{ l.study_topic }}</th>
               <td>{{ l.created_at }}</td>
               <td>
+                <form action="{% url 'study_change' category_id=category_id action='delete' study_id=l.id %}" method="POST">
                 {% csrf_token %}
                 <a href="{% url 'study_change' category_id=category_id action='update' study_id=l.id %}" class="btn btn-sm btn-primary">
                     내용 수정
