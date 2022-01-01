@@ -31,9 +31,9 @@ class Users(AbstractUser):
     REQUIRED_FIELDS = []
 
 class Categories(TimeStampedModel):
-    name = models.CharField(max_length=100)
+    category_name = models.CharField(max_length=100)
     organization = models.ForeignKey(Organization, on_delete=models.DO_NOTHING, null=True)
-    creator = models.ForeignKey(Users, on_delete=models.CASCADE)
+    created_by = models.ForeignKey(Users, on_delete=models.CASCADE)
 
 class StudyList(TimeStampedModel):
     def rand_string():
@@ -45,7 +45,7 @@ class StudyList(TimeStampedModel):
         return random.choice(str_pool).lower()
 
     nick_name = models.CharField(max_length=100)
-    category = models.ForeignKey(Categories, on_delete=models.DO_NOTHING, null=True)
-    creator = models.ForeignKey(Users, on_delete=models.CASCADE)    
+    category_id = models.ForeignKey(Categories, on_delete=models.DO_NOTHING, null=True)
+    created_by = models.ForeignKey(Users, on_delete=models.CASCADE)    
     study_topic = models.CharField(max_length=30)
     study_contect = models.TextField()

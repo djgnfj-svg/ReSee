@@ -1,11 +1,9 @@
-from collections import UserList
 from django.contrib.auth import SESSION_KEY, login, logout
-from django.http import response
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import redirect, render
-from Reviewer.form import LoginForm, MemberDelForm, MemberModifiForm, RegisterForm
-from Reviewer.models import Users
-
+from Reviewer.form import CateCreateForm, LoginForm, MemberDelForm, MemberModifiForm, RegisterForm, StudyCreateForm
+from Reviewer.models import Categories, StudyList, Users
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 
@@ -98,5 +96,69 @@ def member_del_view(request):
 def home_view(request):
     return render(request, "home.html")
 
-def board_view(request):
-    return render(request, "board.html")
+def category_view(request):
+    get_list = Categories.objects.order_by("created_at")
+    return render(request, "cate_list.html", {"list" : get_list})
+
+@login_required
+def category_create_view(request):
+    msg = None
+    if request.method == "POST":
+        form = CateCreateForm(request.POST)
+        if form.is_valid():
+            msg = f"{form.cleaned_data.get('category_name')} 생성완료!"
+            messages.add_message(request, messages.INFO, msg)
+            form.save(request)
+            return redirect("cate_list")
+        else:
+            form =CateCreateForm()
+    else:
+        form =CateCreateForm()
+    return render(request, "cate_create.html", {"form":form})
+
+@login_required
+def category_change_view(request, action, list_id):
+    if request.method == "POST":
+        list_data = Categories.objects.filter(id=list_id)
+        if list_data.exists():
+            if list_data.first().created_by_id != request.user.id:
+                msg = "자신이 소유하지 않은 list 입니다리~~"
+            else:
+                if action == "delete":
+                    msg = f"{list_data.first().category_name} 삭제 완료"
+                    list_data.delete()
+                    messages.add_message(request, messages.INFO, msg)
+                elif action == "update":
+                    msg = f"{list_data.first().category_name} 수정 완료"
+                    form = CateCreateForm(request.POST)
+                    form.update_form(request, list_id)
+                    messages.add_message(request, messages.INFO, msg)
+    elif request.method == "GET" and action == "update":
+        list_data = Categories.objects.filter(pk=list_id).first()
+        form = CateCreateForm(instance=list_data)
+        return render(request, "cate_create.html", {"form" : form, "is_update":True})
+    elif request.method == "GET" and action == "study_list":
+        return study_list_view(request, list_id)
+    return redirect("cate_list")
+
+def study_list_view(request, list_id):
+    # get_list = Categories.objects.order_by("created_at")
+    form = StudyList.objects.order_by("created_at")
+    return render(request, "study_list.html", {"form" : form, "list_id":list_id})
+
+@login_required
+def study_create_view(request, list_id):
+    msg = None
+    if request.method == "POST":
+        form = StudyCreateForm(request.POST)
+        if form.is_valid():
+            msg = f"{form.cleaned_data.get('category_name')} 생성완료!"
+            messages.add_message(request, messages.INFO, msg)
+            temp = Categories.objects.filter(id=list_id).first()
+            form.save(request, temp.id)
+            return redirect("study_list", list_id)
+        else:
+            form =StudyCreateForm()
+    else:
+        form =StudyCreateForm()
+    return render(request, "study_create.html", {"form":form})

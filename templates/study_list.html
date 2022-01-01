@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title%}공부목록 리스트{% endblock %}
+{% block content %}
+
+<div class="row">
+  <div class="col-xl-12">
+    <div class="card">
+      <div class="card-header border-0">
+        <a href="{% url 'study_create' list_id %}" class="btn btn-primary btn-sm font-size-12 float-right">
+          추가
+        </a>
+      </div>
+      <div class="table-responsive">
+        <!-- Projects table -->
+        <table class="table align-items-center table-flush">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col">제목</th>
+              <th scope="col">주제</th>
+              <th scope="col">액션</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for l in form%}
+            <tr>
+              <th scope="row">{{ l.study_topic }}</th>
+              <td>{{ l.created_at }}</td>
+              <td>
+                <form action="/category_list/delete/{{ l.id }}" method="POST">
+                {% csrf_token %}
+                <a href="/category_list/study_list/{{ l.id }}" class="btn btn-sm btn-primary">
+                  내용 보기
+                </a>
+                <a href="/category_list/update/{{ l.id }}" class="btn btn-sm btn-primary">
+                    카테고리 수정
+                  </a>
+                  <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('정말 삭제 하시겠습니까?');">
+                    카테고리 삭제
+                  </button>
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% if messages %}
+    {% for message in messages %}
+    <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px;">
+      <div class="toast" style="position: absolute; top: 0; right: 0;"  data-delay="5000">
+        <div class="toast-header">
+          <strong class="mr-auto">알림</strong>
+          <small>방금 전</small>
+          <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="toast-body">
+          {{message}}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+    <script>
+      $('.toast').toast('show');
+    </script>
+{% endif %}
+{% endblock %}
