@@ -5,10 +5,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- CSS -->
+  <link rel="stylesheet" href="{% static 'css/std2.css' %}">
   <title>SideBar sub menus</title>
   <script>
     function home(){
-      location.href="/category_list"
+      location.replace('/category_list');
+    }
+    function setting(){
+      location.replace('/setting')
     }
   </script>
 </head>
@@ -21,11 +25,11 @@
           <a href="#" class="nav__logo"></a>
         </div>
         <div class="nav__list">
-          <a onclick="home()" class="nav__link active">
+          <a onclick="home()" class="nav__link" id="idhome">
             <ion-icon name="home-outline" class="nav__icon"></ion-icon>
             <span class="nav_name">Dashboard</span>
           </a>
-          <a href="" class="nav__link">
+          <a onclick="setting()" class="nav__link">
             <ion-icon name="settings-outline" class="nav__icon"></ion-icon>
             <span class="nav_name">Settings</span>
           </a>

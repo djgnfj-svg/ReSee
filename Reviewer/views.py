@@ -75,6 +75,9 @@ def member_modify_view(request):
         msg = None
     return render(request, "member_modify.html", {"form_modify" : form_modify})
     
+@login_required
+def setting_view(request):
+    return render(request,"setting.html")
 
 @csrf_exempt
 @login_required

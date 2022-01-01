@@ -6,7 +6,7 @@
     --nav--width: 92px;
 
     /* Colores */
-    --first-color: #295ab6;
+    --first-color: #c7cacf;
     --bg-color: #4d4949;
     --sub-color: #d42710;
     --white-color: rgb(233, 230, 230);
@@ -99,7 +99,7 @@ a {
     color: var(--white-color);
     border-radius: .5rem;
     margin-bottom: 1rem;
-    transition: .3s;
+    transition: .5s;
     cursor: pointer;
 }
 
