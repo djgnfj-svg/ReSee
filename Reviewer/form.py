@@ -79,7 +79,7 @@ class CateCreateForm(forms.ModelForm):
             "category_name" : _("과목이름"),
         }
         widgets ={
-            "category_name":forms.TextInput(attrs={"class" : "form-control", "placeholder" : "과목이름을 입력하세욥!"}),
+            "category_name":forms.TextInput(attrs={"class" : "form-control", "placeholder" : "케테고리 입력하세욥!"}),
         }
         
     def save(self, request, commit=True):

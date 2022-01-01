@@ -7,7 +7,7 @@
   <div class="col-xl-12">
     <div class="card">
       <div class="card-header border-0">
-        <a href="{% url 'study_create' list_id %}" class="btn btn-primary btn-sm font-size-12 float-right">
+        <a href="{% url 'study_create' category_id  %}" class="btn btn-primary btn-sm font-size-12 float-right">
           추가
         </a>
       </div>
@@ -17,7 +17,7 @@
           <thead class="thead-light">
             <tr>
               <th scope="col">제목</th>
-              <th scope="col">주제</th>
+              <th scope="col">생성일</th>
               <th scope="col">액션</th>
             </tr>
           </thead>
@@ -29,14 +29,14 @@
               <td>
                 <form action="/category_list/delete/{{ l.id }}" method="POST">
                 {% csrf_token %}
-                <a href="/category_list/study_list/{{ l.id }}" class="btn btn-sm btn-primary">
+                <!-- <a href="/category_list/study_list/{{ l.id }}" class="btn btn-sm btn-primary">
                   내용 보기
-                </a>
+                </a> -->
                 <a href="/category_list/update/{{ l.id }}" class="btn btn-sm btn-primary">
-                    카테고리 수정
+                    내용 수정
                   </a>
                   <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('정말 삭제 하시겠습니까?');">
-                    카테고리 삭제
+                    내용 삭제
                   </button>
                 </form>
               </td>

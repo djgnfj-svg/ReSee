@@ -28,7 +28,7 @@ urlpatterns = [
     path('member_del/', member_del_view, name="member_del"),
     path("category_list/",category_view,name="cate_list"),
     path("category_list/create/",category_create_view,name="cate_create"),
-    path("category_list/<str:action>/<int:list_id>",category_change_view,name="cate_list"),
-    path("category_list/study_list/<int:list_id>",study_list_view,name="study_list"),
-    path("category_list/study_list/<int:list_id>/create/",study_create_view,name="study_create"),
+    path("category_list/<str:action>/<int:category_id>",category_change_view,name="cate_list"),
+    path("category_list/<int:category_id>/study_list/",study_list_view,name="study_list"),
+    path("category_list/<int:category_id>/study_list/create/",study_create_view,name="study_create"),
 ]

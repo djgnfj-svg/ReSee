@@ -97,7 +97,7 @@ def home_view(request):
     return render(request, "home.html")
 
 def category_view(request):
-    get_list = Categories.objects.order_by("created_at")
+    get_list = Categories.objects.order_by("created_at").filter(created_by_id=request.user.id)
     return render(request, "cate_list.html", {"list" : get_list})
 
 @login_required
@@ -117,9 +117,9 @@ def category_create_view(request):
     return render(request, "cate_create.html", {"form":form})
 
 @login_required
-def category_change_view(request, action, list_id):
+def category_change_view(request, action, category_id):
     if request.method == "POST":
-        list_data = Categories.objects.filter(id=list_id)
+        list_data = Categories.objects.filter(id=category_id)
         if list_data.exists():
             if list_data.first().created_by_id != request.user.id:
                 msg = "자신이 소유하지 않은 list 입니다리~~"
@@ -131,32 +131,32 @@ def category_change_view(request, action, list_id):
                 elif action == "update":
                     msg = f"{list_data.first().category_name} 수정 완료"
                     form = CateCreateForm(request.POST)
-                    form.update_form(request, list_id)
+                    form.update_form(request, category_id)
                     messages.add_message(request, messages.INFO, msg)
     elif request.method == "GET" and action == "update":
-        list_data = Categories.objects.filter(pk=list_id).first()
+        list_data = Categories.objects.filter(pk=category_id).first()
         form = CateCreateForm(instance=list_data)
         return render(request, "cate_create.html", {"form" : form, "is_update":True})
     elif request.method == "GET" and action == "study_list":
-        return study_list_view(request, list_id)
+        return study_list_view(request, category_id)
     return redirect("cate_list")
 
-def study_list_view(request, list_id):
+def study_list_view(request, category_id):
     # get_list = Categories.objects.order_by("created_at")
-    form = StudyList.objects.order_by("created_at")
-    return render(request, "study_list.html", {"form" : form, "list_id":list_id})
+    form = StudyList.objects.order_by("created_at").filter(created_by_id = request.user.id, category_id_id = category_id)
+    return render(request, "study_list.html", {"form" : form, "category_id":category_id})
 
 @login_required
-def study_create_view(request, list_id):
+def study_create_view(request, category_id):
     msg = None
     if request.method == "POST":
         form = StudyCreateForm(request.POST)
         if form.is_valid():
             msg = f"{form.cleaned_data.get('category_name')} 생성완료!"
             messages.add_message(request, messages.INFO, msg)
-            temp = Categories.objects.filter(id=list_id).first()
+            temp = Categories.objects.filter(id=category_id).first()
             form.save(request, temp.id)
-            return redirect("study_list", list_id)
+            return redirect("study_list", category_id)
         else:
             form =StudyCreateForm()
     else:
