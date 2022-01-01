@@ -12,16 +12,13 @@ class TimeStampedModel(models.Model):
     class Meta:
         abstract = True
 
-
 class PayPlan(TimeStampedModel):
     name = models.CharField(max_length=20)
     price = models.IntegerField()
 
-
 class Organization(TimeStampedModel):
     name = models.CharField(max_length=50)
     pay_plan = models.ForeignKey(PayPlan, on_delete=models.DO_NOTHING, null=True)
-
 
 class Users(AbstractUser):
     email = models.EmailField(max_length=100, null=True, unique=True)

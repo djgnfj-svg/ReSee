@@ -44,7 +44,6 @@ def login_view(request):
         form_login = LoginForm()
     return render(request, "login.html", {"form_login" : form_login, "msg" : msg, "form_register" : form_register})
 
-
 def register_view(request):
     form_login = LoginForm()
     form_register = RegisterForm()
@@ -162,3 +161,32 @@ def study_create_view(request, category_id):
     else:
         form =StudyCreateForm()
     return render(request, "study_create.html", {"form":form})
+
+@login_required
+def study_change_view(request, category_id, action, study_id):
+    if request.method == "POST":
+        list_data = StudyList.objects.filter(id=study_id)
+        if list_data.exists():
+            if list_data.first().created_by_id != request.user.id:
+                msg = "자신이 소유하지 않은 list 입니다리~~"
+            else:
+                if action == "delete":
+                    msg = f"{list_data.first().study_topic} 삭제 완료"
+                    list_data.delete()
+                    messages.add_message(request, messages.INFO, msg)
+                elif action == "update":
+                    msg = f"{list_data.first().study_topic} 수정 완료"
+                    form = StudyCreateForm(request.POST)
+                    if form.is_valid():
+                        form.update_form(request, study_id)
+                        print("tset")
+                    else :
+                        msg = f"에메함 ㅇㅇ 수정 완료"
+                        print("tset33")
+                    print(form.errors.as_json())
+                    messages.add_message(request, messages.INFO, msg)
+    elif request.method == "GET" and action == "update":
+        list_data = StudyList.objects.filter(pk=study_id).first()
+        form = StudyCreateForm(instance=list_data)
+        return render(request, "study_create.html", {"form" : form, "is_update":True})
+    return redirect("study_list", category_id)
