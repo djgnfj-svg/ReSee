@@ -182,10 +182,8 @@ def study_change_view(request, category_id, action, study_id):
                     form = StudyCreateForm(request.POST)
                     if form.is_valid():
                         form.update_form(request, study_id)
-                        print("tset")
                     else :
                         msg = f"에메함 ㅇㅇ 수정 완료"
-                        print("tset33")
                     print(form.errors.as_json())
                     messages.add_message(request, messages.INFO, msg)
     elif request.method == "GET" and action == "update":

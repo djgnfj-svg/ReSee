@@ -111,17 +111,17 @@ class StudyCreateForm(forms.ModelForm):
         instance = super(StudyCreateForm, self).save(commit=False)
         instance.created_by_id = request.user.id
         instance.category_id_id = temp
-        instance.nick_name = instance.nick_name.strip()
         instance.study_topic = instance.study_topic.strip()
         instance.study_contect = instance.study_contect.strip()
+        instance.review_count = 0
         if commit:
             instance.save()
         return instance
 
     def update_form(self, request, list_id):
         instance = super(StudyCreateForm, self).save(commit=False)
-        instance.nick_name = instance.nick_name.strip()
         instance.study_topic = instance.study_topic.strip()
         instance.study_contect = instance.study_contect.strip()
+        instance.review_count += 1
         StudyList.objects.filter(pk=list_id, created_by_id=request.user.id).update(
             study_topic=instance.study_topic, study_contect=instance.study_contect)
