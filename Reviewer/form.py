@@ -1,7 +1,8 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-
-from Reviewer.models import Users
+from django.db.models.base import Model
+from django.utils.translation import gettext_lazy as _
+from Reviewer.models import Categories, StudyList, Users
 
 
 class LoginForm(forms.Form):
@@ -69,3 +70,57 @@ class RegisterForm(UserCreationForm):
         if commit:
             user.save()
         return user
+
+class CateCreateForm(forms.ModelForm):
+    class Meta:
+        model = Categories
+        fields = ["category_name"]
+        labels = {
+            "category_name" : _("과목이름"),
+        }
+        widgets ={
+            "category_name":forms.TextInput(attrs={"class" : "form-control", "placeholder" : "과목이름을 입력하세욥!"}),
+        }
+        
+    def save(self, request, commit=True):
+        instance = super(CateCreateForm, self).save(commit=False)
+        instance.created_by_id = request.user.id
+        instance.category_name = instance.category_name.strip()
+        if commit:
+            print("Teststsets")
+            instance.save()
+        return instance
+
+    def update_form(self, request, list_id):
+        instance = super(CateCreateForm, self).save(commit=False)
+        instance.category_name = instance.category_name.strip()
+        Categories.objects.filter(pk=list_id, created_by_id=request.user.id).update(category_name=instance.category_name)
+
+class StudyCreateForm(forms.ModelForm):
+    class Meta:
+        model = StudyList
+        fields = [
+            "study_topic",
+            "study_contect",
+        ]
+        widgets ={
+            "study_topic":forms.TextInput(attrs={"class" : "form-control", "placeholder" : "학습 주제를 입력하세요! ex.. 접두사"}),
+            "study_contect":forms.TextInput(attrs={"class" : "form-control", "placeholder" : "학습 내용을 입력하세요"}),
+        }
+    def save(self, request, temp, commit=True):
+        instance = super(StudyCreateForm, self).save(commit=False)
+        instance.created_by_id = request.user.id
+        instance.category_id_id = temp
+        instance.nick_name = instance.nick_name.strip()
+        instance.study_topic = instance.study_topic.strip()
+        instance.study_contect = instance.study_contect.strip()
+        if commit:
+            instance.save()
+        return instance
+
+    def update_form(self, request, list_id):
+        instance = super(StudyCreateForm, self).save(commit=False)
+        instance.nick_name = instance.nick_name.strip()
+        instance.study_topic = instance.study_topic.strip()
+        instance.study_contect = instance.study_contect.strip()
+        StudyList.objects.filter(pk=list_id, created_by_id=request.user.id).update(category_name=instance.category_name)
