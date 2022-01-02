@@ -6,10 +6,10 @@
     --nav--width: 92px;
 
     /* Colores */
-    --first-color: #c7cacf;
-    --bg-color: #4d4949;
+    --first-color: #295ab6;
+    --bg-color: #163235;
     --sub-color: #d42710;
-    --white-color: rgb(233, 230, 230);
+    --white-color: rgb(236, 233, 233);
 
     /* Fuente y tipografia */
     --body-font: 'Poppins', sans-serif;
@@ -28,7 +28,7 @@
 body {
     position: relative;
     margin: 0;
-    padding: 0 0 0 5.75rem;
+    padding: 0rem 0 0 5.5rem;
     font-family: var(--body-font);
     font-size: var(--normal-font-size);
     transition: .5s;
@@ -99,7 +99,7 @@ a {
     color: var(--white-color);
     border-radius: .5rem;
     margin-bottom: 1rem;
-    transition: .5s;
+    transition: .3s;
     cursor: pointer;
 }
 
@@ -122,7 +122,7 @@ a {
 
 /* Add padding body*/
 .body-pd {
-    padding: 0 0 0 15rem;
+    padding: 0rem 0 0 15rem;
 }
 
 /* Active links menu */

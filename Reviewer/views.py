@@ -144,7 +144,6 @@ def category_change_view(request, action, category_id):
     return redirect("cate_list")
 
 def study_list_view(request, category_id):
-    # get_list = Categories.objects.order_by("created_at")
     form = StudyList.objects.order_by("created_at").filter(created_by_id = request.user.id, category_id_id = category_id)
     return render(request, "study_list.html", {"form" : form, "category_id":category_id})
 

@@ -3,26 +3,25 @@
 {% block title%}카테고리 리스트{% endblock %}
 {% block content %}
 
-{% include 'sidebar.html' %}
-  <!--시작 -->
-  <div class="row">
-    <div class="col-xl-12">
-      <div class="card">
-        <div class="card-header border-0">
-          <a href="{% url 'cate_create' %}" class="btn btn-primary btn-sm font-size-12 float-right">
-            추가
-          </a>
-        </div>
-        <div class="table-responsive">
-          <!-- Projects table -->
-          <table class="table align-items-center table-flush">
-            <thead class="thead-light">
-              <tr>
-                <th scope="col">카테고리이름</th>
-                <th scope="col">생성일</th>
-                <th scope="col">액션</th>
-              </tr>
-            </thead>
+<!--시작 -->
+<div class="row">
+  <div class="col-xl-12">
+    <div class="card">
+      <div class="card-header border-0">
+        <a href="{% url 'cate_create' %}" class="btn btn-primary btn-sm font-size-12 float-right">
+          추가
+        </a>
+      </div>
+      <div class="table-responsive">
+        <!-- Projects table -->
+        <table class="table align-items-center table-flush">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col">카테고리이름</th>
+              <th scope="col">생성일</th>
+              <th scope="col">액션</th>
+            </tr>
+          </thead>
             <tbody>
               {% for l in list%}
               <tr>
@@ -31,6 +30,9 @@
                 <td>
                   <form action="/category_list/delete/{{ l.id }}" method="POST">
                     {% csrf_token %}
+                    <a href="/category_list/study_list/{{ l.id }}" class="btn btn-sm btn-primary">
+                      복습 시작
+                    </a>
                     <a href="/category_list/study_list/{{ l.id }}" class="btn btn-sm btn-primary">
                       내용 보기
                     </a>
@@ -72,13 +74,8 @@
   </script>
   {% endif %}
   <!-- 끝 -->
-
   <!-- IONICONS -->
   <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
   <!-- JS -->
   <script src="{% static 'css/main3.js' %}"></script>
-</body>
-
-
-
 {% endblock %}

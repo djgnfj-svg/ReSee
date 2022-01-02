@@ -3,6 +3,14 @@
 {% block title%}복습 생성{% endblock %}
 {% block content %}
 
+<style>
+	p{
+		font-size: 20px;
+		margin:3px;
+	}
+	
+</style>
+
 <div class="row">
 	<div class="col-xl-12">
 		<div class="card">
@@ -18,13 +26,19 @@
 			<div class="card-body">
 				<form method="post">
 					{% csrf_token %}
-					<div class="row">
-						{% for f in form.visible_fields %}
+					<div class="col">
+						<div>
+							<p>study_topic</p>
+							{{form.study_topic}}
+						</div>
+						<div id="contect">
+							<p>studt_contect</p>
+							{{form.study_contect}}
+						</div>
 						<div class="col-6">
 							<label>{{ f.label }}</label>
 							{{ f }}
 						</div>
-						{% endfor %}
 					</div>
 					<div class="text-center">
 						<button type="submit" class="btn btn-success mt-5">

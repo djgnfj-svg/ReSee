@@ -2,7 +2,15 @@
 {% load static %}
 {% block title%}공부목록 리스트{% endblock %}
 {% block content %}
-{% include 'sidebar.html' %}  
+<style>
+  #start_Btn {
+    position : fixed;
+    left : 750px;
+    background-color: rgb(246, 250, 0);
+    border : 5px solid rgb(255, 255, 255); 
+    
+  }
+  </style>
 
 <div class="row">
   <div class="col-xl-12">
@@ -44,6 +52,9 @@
         </table>
       </div>
     </div>
+    <button type="submit" id = "start_Btn">
+      <a>시작</a>
+      </button>
   </div>
 </div>
 {% if messages %}

@@ -1,5 +1,6 @@
 import string
 import random
+from typing import Sized
 
 from django.db import models
 from django.contrib.auth.models import AbstractUser
@@ -41,8 +42,8 @@ class StudyList(TimeStampedModel):
         str_pool = string.ascii_letters
         return random.choice(str_pool).lower()
 
-    review_count = models.SmallIntegerField()
+    review_count = models.IntegerField(default=0)
     category_id = models.ForeignKey(Categories, on_delete=models.CASCADE, null=True)
     created_by = models.ForeignKey(Users, on_delete=models.CASCADE)    
     study_topic = models.CharField(max_length=30)
-    study_contect = models.TextField()
+    study_contect = models.TextField(blank=True , null =True)

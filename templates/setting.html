@@ -2,9 +2,21 @@
 {%load static%}
 {%block title %} Setting {% endblock %}
 {% block content %}
-{% include 'sidebar.html' %}
+<!-- {% include 'sidebar.html' %} -->
 
+<script>
+    function update_email(){
+        location.replace('member_modify');
+    }
+    function delete_id(){
+        location.replace('member_del');
+    }
+</script>
 
+<div>
+    <button onclick="update_email()">이메일 수정</button>
+    <button onclick="delete_id()">삭제</button>
+</div>
 
 </html>
 {% endblock %}

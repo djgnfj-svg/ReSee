@@ -42,12 +42,12 @@
     <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
 
     <!-- Core theme CSS (includes Bootstrap) -->
+    
+    {% include 'top.html' %}
     {% block head %}
     {% endblock %}
+    {% include 'sidebar.html'%}
 </head>
-
-<body>
-    {% include 'top.html' %}
     {% block content %}
     {% endblock %}
 </body>

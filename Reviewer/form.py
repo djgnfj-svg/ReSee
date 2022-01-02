@@ -79,7 +79,10 @@ class CateCreateForm(forms.ModelForm):
             "category_name" : _("과목이름"),
         }
         widgets ={
-            "category_name":forms.TextInput(attrs={"class" : "form-control", "placeholder" : "케테고리 입력하세욥!"}),
+            "category_name":forms.TextInput(attrs={
+                "class" : "form-control",
+                 "placeholder" : "케테고리 입력하세욥!"
+                 }),
         }
         
     def save(self, request, commit=True):
@@ -104,8 +107,16 @@ class StudyCreateForm(forms.ModelForm):
             "study_contect",
         ]
         widgets ={
-            "study_topic":forms.TextInput(attrs={"class" : "form-control", "placeholder" : "학습 주제를 입력하세요! ex.. 접두사"}),
-            "study_contect":forms.TextInput(attrs={"class" : "form-control", "placeholder" : "학습 내용을 입력하세요"}),
+            "study_topic":forms.Textarea(attrs={
+                "class" : "form-control",
+                 "placeholder" : "학습 주제를 입력하세요! ex.. 접두사",
+                 "style" : "height : 30px"
+                 }),
+            "study_contect":forms.Textarea(attrs={
+                "class": "new-class-name two",
+                 "placeholder" : "학습 내용을 입력하세요",
+                 "style" : "height : 500px; width : 90.75rem; outline:none; border:none; overflow: auto;"
+                 }),
         }
     def save(self, request, temp, commit=True):
         instance = super(StudyCreateForm, self).save(commit=False)
@@ -113,7 +124,6 @@ class StudyCreateForm(forms.ModelForm):
         instance.category_id_id = temp
         instance.study_topic = instance.study_topic.strip()
         instance.study_contect = instance.study_contect.strip()
-        instance.review_count = 0
         if commit:
             instance.save()
         return instance
@@ -122,6 +132,5 @@ class StudyCreateForm(forms.ModelForm):
         instance = super(StudyCreateForm, self).save(commit=False)
         instance.study_topic = instance.study_topic.strip()
         instance.study_contect = instance.study_contect.strip()
-        instance.review_count += 1
         StudyList.objects.filter(pk=list_id, created_by_id=request.user.id).update(
             study_topic=instance.study_topic, study_contect=instance.study_contect)
