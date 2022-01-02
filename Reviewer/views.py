@@ -1,10 +1,12 @@
 from django.contrib.auth import SESSION_KEY, login, logout
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import redirect, render
-from Reviewer.form import CateCreateForm, LoginForm, MemberDelForm, MemberModifiForm, RegisterForm, StudyCreateForm
+from Reviewer.form import CateCreateForm, LoginForm, MemberDelForm, MemberModifiForm, RegisterForm, StudyCreateForm, StudyReviewForm
 from Reviewer.models import Categories, StudyList, Users
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+
+from Reviewer.utils import dateCalculation
 # Create your views here.
 
 @csrf_exempt
@@ -180,9 +182,12 @@ def study_change_view(request, category_id, action, study_id):
                     msg = f"{list_data.first().study_topic} 수정 완료"
                     form = StudyCreateForm(request.POST)
                     if form.is_valid():
+                        # 복습을 했을경우 이건 업데이트이기때문에 주석함
+                        # temp = list_data.get(id=study_id)
+                        # temp.review_count_up()
                         form.update_form(request, study_id)
                     else :
-                        msg = f"에메함 ㅇㅇ 수정 완료"
+                        msg = f"에메함 "
                     print(form.errors.as_json())
                     messages.add_message(request, messages.INFO, msg)
     elif request.method == "GET" and action == "update":
@@ -190,3 +195,10 @@ def study_change_view(request, category_id, action, study_id):
         form = StudyCreateForm(instance=list_data)
         return render(request, "study_create.html", {"form" : form, "is_update":True})
     return redirect("study_list", category_id)
+
+
+def study_review_view(request, category_id, study_id):
+    base_time = StudyList.objects.order_by("-created_at").first().created_at
+    review_list = dateCalculation(base_time, StudyList)
+    form = StudyReviewForm(review_list)
+    return render(request, "study_review.html", {"form" : form, "study_id" : study_id})
