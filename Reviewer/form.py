@@ -122,6 +122,18 @@ class StudyCreateForm(forms.ModelForm):
         instance = super(StudyCreateForm, self).save(commit=False)
         instance.study_topic = instance.study_topic.strip()
         instance.study_contect = instance.study_contect.strip()
-        instance.review_count += 1
+        print(instance.review_count)
         StudyList.objects.filter(pk=list_id, created_by_id=request.user.id).update(
             study_topic=instance.study_topic, study_contect=instance.study_contect)
+
+class StudyReviewForm(forms.ModelForm):
+    class Meta:
+        model = StudyList
+        fields = [
+            "study_topic",
+            "study_contect",
+        ]
+        widgets ={
+            "study_topic":forms.TextInput(attrs={"class" : "form-control", "disabled" : True}),
+            "study_contect":forms.TextInput(attrs={"class" : "form-control", "disabled" : True}),
+        }

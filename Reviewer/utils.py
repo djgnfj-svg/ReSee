@@ -1,7 +1,22 @@
 
-
-def form_is_valid(form, _msg):
-	if form.is_valid():
-		email = form.cleaned_data.get("email")
-		raw_password = form.cleaned_data.get("password")
-		msg = _msg
+def dateCalculation(_baseDate, _StudyList):
+	return_list = []
+	for s_list in _StudyList.objects.all():
+		temp = _baseDate-s_list.created_at
+		temp_day = temp.days
+		if temp_day > 1 and temp_day < 3 and s_list.review_count < 2:
+			return_list.append(s_list)
+		elif temp_day > 3 and temp_day < 7 and s_list.review_count < 3:
+			return_list.append(s_list)
+		elif temp_day > 7 and temp_day < 14 and s_list.review_count < 4:
+			return_list.append(s_list)
+		elif temp_day > 14 and temp_day < 31 and s_list.review_count < 5:
+			return_list.append(s_list)
+		elif temp_day > 31 and temp_day < 93 and s_list.review_count < 6:
+			return_list.append(s_list)
+		elif temp_day > 93 and temp_day < 182 and s_list.review_count < 7:
+			return_list.append(s_list)
+		elif temp_day > 182 and s_list.review_count < 8:
+			return_list.append(s_list)
+	
+	return(return_list)

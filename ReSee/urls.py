@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from Reviewer.views import category_change_view, category_view, category_create_view, home_view, login_register_control_view, logout_view, member_del_view, member_modify_view, register_view, setting_view, study_change_view, study_create_view, study_list_view
+from Reviewer.views import category_change_view, category_view, category_create_view, home_view, login_register_control_view, logout_view, member_del_view, member_modify_view, register_view, setting_view, study_change_view, study_create_view, study_list_view, study_review_view
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -32,6 +32,8 @@ urlpatterns = [
     path("category_list/<str:action>/<int:category_id>",category_change_view,name="cate_change"),
     path("category_list/<int:category_id>/study_list/",study_list_view,name="study_list"),
     path("category_list/<int:category_id>/study_list/create/",study_create_view,name="study_create"),
+    path("category_list/<int:category_id>/study_list/reviwe/<int:study_id>",
+        study_review_view,name="study_review"),
     path("category_list/<int:category_id>/study_list/<str:action>/<int:study_id>",
         study_change_view,name="study_change"),
 ]
