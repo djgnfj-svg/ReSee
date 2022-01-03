@@ -197,16 +197,42 @@ def study_change_view(request, category_id, action, study_id):
         return render(request, "study_create.html", {"form" : form, "is_update":True})
     return redirect("study_list", category_id)
 
-# def study_review_check_view(request, category_id):
-
-
 def study_review_view(request, category_id, study_id):
     base_time = StudyList.objects.filter(pk=category_id).order_by("-created_at").first().created_at
     review_list = dateCalculation(base_time, StudyList)
-    try:
-        form = StudyReviewForm(instance=review_list[study_id])
-    except IndexError:
-        messages.add_message(request, messages.INFO, "복습할 껀덕지가 없다 이말이야")
-        return redirect("cate_list")
-    else:
-        return render(request, "study_review.html", {"form" : form, "study_id" : study_id})
+
+    #todo 함수로 체인지 나중에
+    if "review_prev" in request.GET: #이전버튼 무효화하기
+        try:
+            if (study_id-1) > 0:
+                form = StudyReviewForm(instance=review_list[study_id-1])
+            else :
+                button_action = False
+        except IndexError:
+            messages.add_message(request, messages.INFO, "복습할 껀덕지가 없다 이말이야")
+            return redirect("cate_list")
+        else:
+            return render(request, "study_review.html", {"form" : form, "category_id" : category_id, 
+            "study_id" : study_id, "button_action" : button_action})
+    elif "review_next" in request.GET:#완료로 버튼바꾸기
+        try:
+            if (study_id+1) > len(review_list):
+                form = StudyReviewForm(instance=review_list[study_id-1])
+            else :
+                finish_action = True
+        except IndexError:
+            messages.add_message(request, messages.INFO, "복습할 껀덕지가 없다 이말이야")
+            return redirect("cate_list")
+        else:
+            return render(request, "study_review.html", {"form" : form, "category_id" : category_id, 
+            "study_id" : study_id, "finish_action" : finish_action})
+    else:#이전버튼 무효화하기 0일떄이니까
+        try:
+            form = StudyReviewForm(instance=review_list[study_id])
+            button_action = False
+        except IndexError:
+            messages.add_message(request, messages.INFO, "복습할 껀덕지가 없다 이말이야")
+            return redirect("cate_list")
+        else:
+            return render(request, "study_review.html", {"form" : form, "category_id" : category_id,
+            "study_id" : study_id, "button_action" : button_action})

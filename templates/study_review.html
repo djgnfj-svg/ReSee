@@ -37,7 +37,15 @@
 		 {{form.study_contect}}
 		</p>
 	</div>
-	</div>
-</div>
-	<button> 이전</button> <button> 다음 </button>
+	<button class="submiy" name="review_prev">
+		<a href="{% url 'study_review' category_id study_id %}">
+		이전
+		</a>
+	</button>
+	<button class="submiy" name="review_next">
+		<a href="{% url 'study_review' category_id study_id %}">
+		다음
+		</a>
+	</button>
+
 {% endblock %}
