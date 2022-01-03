@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load custom_tags %}
 {% block title%}reviwe 리스트{% endblock %}
 {% block content %}
 
@@ -38,12 +39,12 @@
 		</p>
 	</div>
 	<button class="submiy" name="review_prev">
-		<a href="{% url 'study_review' category_id study_id %}">
+		<a href="{% url 'study_review' category_id study_id|sub_id %}">
 		이전
 		</a>
 	</button>
 	<button class="submiy" name="review_next">
-		<a href="{% url 'study_review' category_id study_id %}">
+		<a href="{% url 'study_review' category_id study_id|add:1 %}">
 		다음
 		</a>
 	</button>

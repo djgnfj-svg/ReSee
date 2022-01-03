@@ -123,6 +123,10 @@ def category_create_view(request):
 
 @login_required
 def category_change_view(request, action, category_id):
+    print("request" , type(request))
+    print("request.GET" , type(request.GET))
+    print("request.method" , type(request.method))
+
     if request.method == "POST":
         list_data = Categories.objects.filter(id=category_id)
         if list_data.exists():
@@ -200,39 +204,17 @@ def study_change_view(request, category_id, action, study_id):
 def study_review_view(request, category_id, study_id):
     base_time = StudyList.objects.filter(pk=category_id).order_by("-created_at").first().created_at
     review_list = dateCalculation(base_time, StudyList)
-
-    #todo 함수로 체인지 나중에
-    if "review_prev" in request.GET: #이전버튼 무효화하기
-        try:
-            if (study_id-1) > 0:
-                form = StudyReviewForm(instance=review_list[study_id-1])
-            else :
-                button_action = False
-        except IndexError:
-            messages.add_message(request, messages.INFO, "복습할 껀덕지가 없다 이말이야")
-            return redirect("cate_list")
-        else:
-            return render(request, "study_review.html", {"form" : form, "category_id" : category_id, 
-            "study_id" : study_id, "button_action" : button_action})
-    elif "review_next" in request.GET:#완료로 버튼바꾸기
-        try:
-            if (study_id+1) > len(review_list):
-                form = StudyReviewForm(instance=review_list[study_id-1])
-            else :
-                finish_action = True
-        except IndexError:
-            messages.add_message(request, messages.INFO, "복습할 껀덕지가 없다 이말이야")
-            return redirect("cate_list")
-        else:
-            return render(request, "study_review.html", {"form" : form, "category_id" : category_id, 
-            "study_id" : study_id, "finish_action" : finish_action})
-    else:#이전버튼 무효화하기 0일떄이니까
-        try:
-            form = StudyReviewForm(instance=review_list[study_id])
-            button_action = False
-        except IndexError:
-            messages.add_message(request, messages.INFO, "복습할 껀덕지가 없다 이말이야")
-            return redirect("cate_list")
-        else:
-            return render(request, "study_review.html", {"form" : form, "category_id" : category_id,
-            "study_id" : study_id, "button_action" : button_action})
+    prev_button = False
+    finish_button = False
+    try:
+        if (study_id-1) > 0:
+            prev_button = True
+        if (study_id+1) == len(review_list):
+            finish_button = True
+        form = StudyReviewForm(instance=review_list[study_id])
+    except IndexError:
+        messages.add_message(request, messages.INFO, "복습할 껀덕지가 없다 이말이야")
+        return redirect("cate_list")
+    else:
+        return render(request, "study_review.html", {"form" : form, "category_id" : category_id,
+        "study_id" : study_id, "prev_button" : prev_button, "finish_button" : finish_button})
