@@ -1,12 +1,7 @@
 
 
 TODO_LIST
-
-1. rememberme 만들기
-2. 회원가입 input 설정, html만들기
-3. 
-
-
-login static css link문제
-아니 미친 어떡해하면 style이라는 css파일의 이름을 바꾸면 백그라운드만 이미지가 안나옴?
-이거맞아?
+study_review_view
+에서 list_out_of_range인가 떳을 때 예외처리를 했는데
+그걸 메시지로 띄워주고 싶은데 맘대루 안되서 패스함
+니가만든 html이 없어서 일단 띄우는거 까지만 해두고 업로드함

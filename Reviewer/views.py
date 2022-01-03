@@ -101,8 +101,9 @@ def home_view(request):
     return render(request, "home.html")
 
 def category_view(request):
+    msg = "asdf"
     get_list = Categories.objects.order_by("created_at").filter(created_by_id=request.user.id)
-    return render(request, "cate_list.html", {"list" : get_list})
+    return render(request, "cate_list.html", {"list" : get_list, "msg":msg})
 
 @login_required
 def category_create_view(request):
@@ -196,9 +197,16 @@ def study_change_view(request, category_id, action, study_id):
         return render(request, "study_create.html", {"form" : form, "is_update":True})
     return redirect("study_list", category_id)
 
+# def study_review_check_view(request, category_id):
+
 
 def study_review_view(request, category_id, study_id):
-    base_time = StudyList.objects.order_by("-created_at").first().created_at
+    base_time = StudyList.objects.filter(pk=category_id).order_by("-created_at").first().created_at
     review_list = dateCalculation(base_time, StudyList)
-    form = StudyReviewForm(review_list)
-    return render(request, "study_review.html", {"form" : form, "study_id" : study_id})
+    try:
+        form = StudyReviewForm(instance=review_list[study_id])
+    except IndexError:
+        messages.add_message(request, messages.INFO, "복습할 껀덕지가 없다 이말이야")
+        return redirect("cate_list")
+    else:
+        return render(request, "study_review.html", {"form" : form, "study_id" : study_id})
