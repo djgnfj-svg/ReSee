@@ -2,10 +2,42 @@
 {% load static %}
 {% block title%}reviwe 리스트{% endblock %}
 {% block content %}
-	{% for f in form.visible_fields %}
-	<div class="col-6">
-		<label>{{ f.label }}</label>
-		{{ f }}
+
+<style>
+	div#study{
+		margin:20px 10px;
+	}
+	p#contect{
+		position: relative;
+		left: 650px;
+	}
+	p{
+		margin : 10px 10px;
+	}
+	p#st{
+		position: relative;
+		left : 100px;
+	}
+	button{
+		background-color: aqua;
+		border : none;
+		position: relative;
+		left : 650px;
+	}
+</style>
+
+<div id="study">
+	<div>
+		<p>Study Topic</p>
+		{{form.study_topic}}
 	</div>
-	{% endfor %}
+	<div>
+		<p id="contect">Study_Contect</p>
+		<p id="st">
+		 {{form.study_contect}}
+		</p>
+	</div>
+	</div>
+</div>
+	<button> 이전</button> <button> 다음 </button>
 {% endblock %}

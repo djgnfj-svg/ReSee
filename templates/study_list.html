@@ -33,7 +33,9 @@
           <tbody>
           {% for l in form%}
             <tr>
-              <th scope="row">{{ l.study_topic }}</th>
+              <th scope="row">
+                {{ l.study_topic }}
+              </th>
               <td>{{ l.created_at }}</td>
               <td>
                 <form action="{% url 'study_change' category_id=category_id action='delete' study_id=l.id %}" method="POST">

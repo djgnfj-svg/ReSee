@@ -143,6 +143,13 @@ class StudyReviewForm(forms.ModelForm):
             "study_contect",
         ]
         widgets ={
-            "study_topic":forms.TextInput(attrs={"class" : "form-control", "disabled" : True}),
-            "study_contect":forms.TextInput(attrs={"class" : "form-control", "disabled" : True}),
+            "study_topic":forms.TextInput(attrs={"class" : "form-control",
+             "disabled" : True,
+             "style" : "width : 150px;"
+
+             }),
+            "study_contect":forms.Textarea(attrs={"class" : "form-control",
+             "disabled" : True,
+            "style" : "height : 570px; width : 1440px; overflow : auto;",
+             }),
         }
