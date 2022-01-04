@@ -124,6 +124,7 @@ class StudyCreateForm(forms.ModelForm):
         instance.category_id_id = temp
         instance.study_topic = instance.study_topic.strip()
         instance.study_contect = instance.study_contect.strip()
+        instance.review_count = 0
         if commit:
             instance.save()
         return instance

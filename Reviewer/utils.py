@@ -1,10 +1,14 @@
 
 def dateCalculation(_baseDate, _StudyList):
 	return_list = []
-	for s_list in _StudyList.objects.all():
+	for s_list in _StudyList:
 		temp = _baseDate-s_list.created_at
 		temp_day = temp.days
-		if temp_day > 1 and temp_day < 3 and s_list.review_count < 2:
+		print("지나간 날짜 : ", temp_day)
+		print("reviwe_count : ",s_list.review_count)
+		if temp_day == 0 and s_list.review_count < 1:
+			return_list.append(s_list)
+		elif temp_day > 1 and temp_day < 3 and s_list.review_count < 2:
 			return_list.append(s_list)
 		elif temp_day > 3 and temp_day < 7 and s_list.review_count < 3:
 			return_list.append(s_list)

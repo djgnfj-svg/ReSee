@@ -202,10 +202,21 @@ def study_change_view(request, category_id, action, study_id):
     return redirect("study_list", category_id)
 
 def study_review_view(request, category_id, study_id):
-    base_time = StudyList.objects.filter(pk=category_id).order_by("-created_at").first().created_at
-    review_list = dateCalculation(base_time, StudyList)
+
+    try:
+        base_time = StudyList.objects.filter(category_id_id=category_id).order_by("-created_at").first().created_at
+    except:
+        return redirect("cate_list")
+    review_list = dateCalculation(base_time, StudyList.objects.filter(category_id_id = category_id))
+    print(review_list)
     prev_button = False
     finish_button = False
+    if study_id == 99:
+        for object in review_list:
+            list_data = StudyList.objects.filter(pk=object.id)
+            temp = list_data.get(id=object.id)
+            temp.review_count_up()
+        return redirect("cate_list")
     try:
         if (study_id-1) > 0:
             prev_button = True

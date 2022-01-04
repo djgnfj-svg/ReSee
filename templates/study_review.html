@@ -43,10 +43,17 @@
 		이전
 		</a>
 	</button>
+	{% if finish_button %}
+	<button class="submiy" name="review_next">
+		<a href="{% url 'study_review' category_id 99%}">
+		종료
+		</a>
+	</button>
+	{% else %}
 	<button class="submiy" name="review_next">
 		<a href="{% url 'study_review' category_id study_id|add:1 %}">
 		다음
 		</a>
 	</button>
-
+	{% endif %}
 {% endblock %}
