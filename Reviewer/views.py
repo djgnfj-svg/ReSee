@@ -218,7 +218,7 @@ def study_review_view(request, category_id, study_id):
             temp.review_count_up()
         return redirect("cate_list")
     try:
-        if (study_id-1) > 0:
+        if (study_id-1) >= 0:
             prev_button = True
         if (study_id+1) == len(review_list):
             finish_button = True

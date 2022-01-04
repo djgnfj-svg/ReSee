@@ -25,6 +25,10 @@
 		position: relative;
 		left : 650px;
 	}
+	button#none_prev{
+		background-color: gray;
+	}
+	
 </style>
 
 <div id="study">
@@ -38,11 +42,20 @@
 		 {{form.study_contect}}
 		</p>
 	</div>
+		{% if prev_button %}
 	<button class="submiy" name="review_prev">
 		<a href="{% url 'study_review' category_id study_id|sub_id %}">
 		이전
 		</a>
 	</button>
+		{% else %}
+		<button class="submiy" id="none_prev" disabled="false">
+			<a>
+			이전
+			</a>
+		</button>
+		{% endif %}
+
 	{% if finish_button %}
 	<button class="submiy" name="review_next">
 		<a href="{% url 'study_review' category_id 99%}">
@@ -50,7 +63,7 @@
 		</a>
 	</button>
 	{% else %}
-	<button class="submiy" name="review_next">
+	<button class="submiy" name="review_next" >
 		<a href="{% url 'study_review' category_id study_id|add:1 %}">
 		다음
 		</a>
