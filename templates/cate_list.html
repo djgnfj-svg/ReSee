@@ -25,7 +25,7 @@
             <tbody>
               {% for l in list %}
               <tr>
-                <th scope="row">{{ l.category_name }}</th>
+                <th scope="row">{{ l.name }}</th>
                 <td>{{ l.created_at }}</td>
                 <td>
                   <form action="/category_list/delete/{{ l.id }}" method="POST">

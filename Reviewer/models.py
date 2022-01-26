@@ -1,5 +1,9 @@
+from pyexpat import model
+from statistics import mode
 import string
 import random
+from sys import prefix
+from tkinter.tix import Tree
 from typing import Sized
 
 from django.db import models
@@ -18,7 +22,14 @@ class PayPlan(TimeStampedModel):
     price = models.IntegerField()
 
 class Organization(TimeStampedModel):
-    name = models.CharField(max_length=50)
+    class Industries(models.TextChoices):
+        PERSONAL = "personal"
+        RETAIL = "retail"
+        MANUFACTURING = "manufacturing"
+        IT = "it"
+        OTHERS = "others"
+    name = models.CharField(max_length=50) # 회사이름
+    industry = models.CharField(max_length=15, choices=Industries.choices,default=Industries.OTHERS)
     pay_plan = models.ForeignKey(PayPlan, on_delete=models.DO_NOTHING, null=True)
 
 class Users(AbstractUser):
@@ -29,9 +40,14 @@ class Users(AbstractUser):
     REQUIRED_FIELDS = []
 
 class Categories(TimeStampedModel):
-    category_name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
     organization = models.ForeignKey(Organization, on_delete=models.DO_NOTHING, null=True)
-    created_by = models.ForeignKey(Users, on_delete=models.CASCADE)
+    creator = models.ForeignKey(Users, on_delete=models.CASCADE)
+
+class EmailVerification(TimeStampedModel):
+    user = models.ForeignKey(Users, on_delete=models.CASCADE)
+    key = models.CharField(max_length=100, null=True)
+    verified = models.BooleanField(default=False)
 
 class StudyList(TimeStampedModel):
     def rand_string():
@@ -43,8 +59,9 @@ class StudyList(TimeStampedModel):
         return random.choice(str_pool).lower()
 
     review_count = models.IntegerField(null=False)
-    category_id = models.ForeignKey(Categories, on_delete=models.CASCADE, null=True)
-    created_by = models.ForeignKey(Users, on_delete=models.CASCADE)    
+    prefix = models.CharField(max_length=50)
+    category = models.ForeignKey(Categories, on_delete=models.CASCADE, null=True)
+    creator = models.ForeignKey(Users, on_delete=models.CASCADE)    
     study_topic = models.CharField(max_length=30)
     study_contect = models.TextField()
 

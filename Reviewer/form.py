@@ -74,21 +74,21 @@ class RegisterForm(UserCreationForm):
 class CateCreateForm(forms.ModelForm):
     class Meta:
         model = Categories
-        fields = ["category_name"]
+        fields = ["name"]
         labels = {
-            "category_name" : _("과목이름"),
+            "name" : _("과목이름"),
         }
         widgets ={
-            "category_name":forms.TextInput(attrs={
+            "name":forms.TextInput(attrs={
                 "class" : "form-control",
-                 "placeholder" : "케테고리 입력하세욥!"
-                 }),
+                "placeholder" : "케테고리 입력하세욥!",
+                }),
         }
         
     def save(self, request, commit=True):
         instance = super(CateCreateForm, self).save(commit=False)
-        instance.created_by_id = request.user.id
-        instance.category_name = instance.category_name.strip()
+        instance.creator_id = request.user.id
+        instance.name = instance.name.strip()
         if commit:
             print("Teststsets")
             instance.save()
@@ -97,7 +97,7 @@ class CateCreateForm(forms.ModelForm):
     def update_form(self, request, list_id):
         instance = super(CateCreateForm, self).save(commit=False)
         instance.category_name = instance.category_name.strip()
-        Categories.objects.filter(pk=list_id, created_by_id=request.user.id).update(category_name=instance.category_name)
+        Categories.objects.filter(pk=list_id, creator_id=request.user.id).update(category_name=instance.category_name)
 
 class StudyCreateForm(forms.ModelForm):
     class Meta:
@@ -118,10 +118,10 @@ class StudyCreateForm(forms.ModelForm):
                  "style" : "height : 500px; width : 90.75rem; outline:none; border:none; overflow: auto;"
                  }),
         }
-    def save(self, request, temp, commit=True):
+    def save(self, request, category_id, commit=True):
         instance = super(StudyCreateForm, self).save(commit=False)
-        instance.created_by_id = request.user.id
-        instance.category_id_id = temp
+        instance.creator_id = request.user.id
+        instance.category_id = category_id
         instance.study_topic = instance.study_topic.strip()
         instance.study_contect = instance.study_contect.strip()
         instance.review_count = 0
@@ -133,7 +133,7 @@ class StudyCreateForm(forms.ModelForm):
         instance = super(StudyCreateForm, self).save(commit=False)
         instance.study_topic = instance.study_topic.strip()
         instance.study_contect = instance.study_contect.strip()
-        StudyList.objects.filter(pk=list_id, created_by_id=request.user.id).update(
+        StudyList.objects.filter(pk=list_id, creator_id=request.user.id).update(
             study_topic=instance.study_topic, study_contect=instance.study_contect)
 
 class StudyReviewForm(forms.ModelForm):
