@@ -1,10 +1,6 @@
-from pyexpat import model
 from statistics import mode
 import string
 import random
-from sys import prefix
-from tkinter.tix import Tree
-from typing import Sized
 
 from django.db import models
 from django.contrib.auth.models import AbstractUser
